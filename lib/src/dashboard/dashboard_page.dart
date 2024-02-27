@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -8,12 +10,12 @@ import 'package:pokeapp_sambil/src/dashboard/dashboard_controller.dart';
 import 'package:pokeapp_sambil/src/utils/my_colors.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+  const DashboardPage({super.key});
 
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }
-
+//cargamos controladores
 class _DashboardPageState extends State<DashboardPage> {
   final DashboardController _con = DashboardController();
   final List<Map<String, dynamic>> _pokemons = [];
@@ -22,7 +24,7 @@ class _DashboardPageState extends State<DashboardPage> {
   bool _allPokemonsLoaded = false;
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
-
+//iniciamos controlador y carga de lista
   @override
   void initState() {
     super.initState();
@@ -40,7 +42,7 @@ class _DashboardPageState extends State<DashboardPage> {
     _searchController.dispose();
     super.dispose();
   }
-
+//obtenemos desde la api pokemon
   Future<void> _loadPokemons() async {
     if (!_loadingMore && !_allPokemonsLoaded) {
       setState(() {
@@ -92,7 +94,7 @@ class _DashboardPageState extends State<DashboardPage> {
       }
     }
   }
-
+//metodo para busqueda
   void _onSearchTextChanged() {
     final searchText = _searchController.text.toLowerCase();
     setState(() {
@@ -101,7 +103,7 @@ class _DashboardPageState extends State<DashboardPage> {
           pokemon['name'].toString().toLowerCase().contains(searchText)));
     });
   }
-
+//constructor visual
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -284,7 +286,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          Navigator.pushNamedAndRemoveUntil(
+                          Navigator.pushNamedAndRemoveUntil( //cerramos sesion y vamos a login
                             context,
                             'login',
                             (route) => false,
@@ -302,7 +304,7 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
     );
   }
-
+//scroll infinito y lazy loader
   void _scrollListener() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
@@ -312,7 +314,7 @@ class _DashboardPageState extends State<DashboardPage> {
     }
   }
 }
-
+//clase para busqueda
 class PokemonSearchDelegate extends SearchDelegate<String> {
   final List<Map<String, dynamic>> pokemons;
 
